@@ -1,0 +1,28 @@
+---
+title: "Advent of Code 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+### Day 1
+
+```{r day1, code=readLines("solutions/1.R")}
+```
+
+### Day 2
+
+```{r day2, code=readLines("solutions/2.R")}
+```
+
+### Day 3
+
+```{r day3, code=readLines("solutions/3.R")}
+```
+
+### Day 4
+
+```{r day4, code=readLines("solutions/4.R")}
+```
