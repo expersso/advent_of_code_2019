@@ -1,28 +1,20 @@
-get_layers <- function(x, height, width) {
-  n <- height
-  m <- width
-  k <- n*m
-  j <- length(x) %/% k
-  lapply(1:j, function(i) matrix(x[((i-1)*k + 1):(j*k)], n, m, TRUE))
-}
-
 parse_data <- function(filename, height, width) {
   x <- readLines(filename)
   x <- as.numeric(strsplit(x, "")[[1]])
-  get_layers(x, height, width)
+  a <- array(x, c(width, height, length(x) / (height * width)))
+  aperm(a, c(2, 1, 3))
 }
 
-n_dig_in_layer <- function(l, d) sum(l == d)
-
 layer_w_fewest_0s <- function(x) {
-  n_0s_in_layer <- sapply(x, n_dig_in_layer, d = 0)
-  x[[order(n_0s_in_layer)[1]]]
+  layer_w_min_0s_idx <- which.min(apply(x, 3, function(i) sum(i == 0)))
+  x[, , layer_w_min_0s_idx]
 }
 
 `%add_color%` <- function(e1, e2) ifelse(e2 == 2, e1, e2)
 
-get_final_image_matrix <- function(layers) {
-  img <- Reduce(`%add_color%`, rev(layers))
+get_final_image_matrix <- function(x) {
+  y <- lapply(seq(dim(x)[3]), function(i) x[, , i])
+  img <- Reduce(`%add_color%`, rev(y))
   apply(img, 2, rev)
 }
 
@@ -33,8 +25,6 @@ print_img <- function(x) {
 
 # I/O
 x <- parse_data("inputs/8.txt", height = 6, width = 25)
-
 l <- layer_w_fewest_0s(x)
-n_dig_in_layer(l, 1) * n_dig_in_layer(l, 2) # Solution to Part 1
-
-print_img(x) # Solution to Part 2
+sum(l == 1) * sum(l == 2) # Solution to Part 1
+print_img(x)              # Solution to Part 2
