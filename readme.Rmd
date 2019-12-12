@@ -38,3 +38,13 @@ knitr::opts_chunk$set(cache = TRUE)
 
 ```{r day6, code=readLines("solutions/6.R")}
 ```
+
+### Day 7
+
+```{r day7}
+```
+
+### Day 8
+
+```{r day8, code=readLines("solutions/8.R")}
+```
